@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Navbar } from "./components/ui";
-import { Hero, CertBanner, About, Skills, Experience, Projects, Contact } from "./components/sections";
+import { Hero, SocialBar, CertBanner, About, Skills, Experience, Projects, Contact } from "./components/sections";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +19,7 @@ const App = () => {
       <Navbar />
       <main className="overflow-x-hidden">
         <Hero />
+        <SocialBar />
         <CertBanner />
         <About />
         <Skills />

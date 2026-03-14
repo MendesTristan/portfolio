@@ -1,4 +1,5 @@
 export { default as Hero } from "./Hero";
+export { default as SocialBar } from "./SocialBar";
 export { default as CertBanner } from "./CertBanner";
 export { default as About } from "./About";
 export { default as Skills } from "./Skills";

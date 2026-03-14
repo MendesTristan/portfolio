@@ -82,7 +82,7 @@ const CertBanner = () => {
   }, { scope: ref });
 
   return (
-    <div ref={ref} className="relative z-20 -mt-12 mb-6 px-6">
+    <div ref={ref} className="relative z-20 pb-6 px-6">
       <div className="max-w-3xl mx-auto">
         <div className="cert-banner-card">
           <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />

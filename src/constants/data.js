@@ -200,7 +200,13 @@ export const certifications = [
   { name: "Google Cloud – Associate Data Practitioner", issuer: "Google", status: "obtained", badge: "GCP Data Practitioner" },
 ];
 
+export const socialLinks = [
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/tristan-mendes-voufo", color: "#0A66C2" },
+  { name: "GitHub", url: "https://github.com/tristan-mendes", color: "#8b5cf6" },
+  { name: "Email", url: "mailto:mendesvoufo.pro@gmail.com", color: "#ea4335" },
+];
+
 export const contactInfo = {
   email: "mendesvoufo.pro@gmail.com",
-  location: "Marne-La-Vallée, 77700",
+  location: "Paris, France",
 };
