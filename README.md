@@ -1,17 +1,44 @@
-# React + Vite
+# Portfolio — Tristan Mendes Voufo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfolio personnel présentant mon parcours en **Data Engineering** et **Cloud Architecture**.
 
-Currently, two official plugins are available:
+Ingénieur diplômé de l'EFREI Paris (Bac+5), doublement certifié **Microsoft Azure AZ-900** et **Google Cloud Associate Data Practitioner**, j'y présente mes expériences professionnelles (BNP Paribas CIB, ISEG Strasbourg, ESPRIT TECH), mes projets techniques et ma stack complète.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack technique
 
-## React Compiler
+- **React** + **Vite** — SPA rapide avec HMR
+- **Tailwind CSS v4** — Styling utility-first
+- **Three.js** / React Three Fiber — Scènes 3D interactives (réseau neuronal, particules)
+- **GSAP** + ScrollTrigger — Animations au scroll et timelines
+- **Responsive** — Mobile-first, adapté à tous les écrans
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Lancer le projet
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# portfolio-" 
+## Build production
+
+```bash
+npm run build
+npm run preview
+```
+
+## Structure
+
+```
+src/
+├── components/
+│   ├── sections/    # Hero, About, Skills, Experience, Projects, Contact
+│   ├── three/       # Scènes 3D (HeroScene, ParticleField, etc.)
+│   └── ui/          # Composants réutilisables (Navbar, Button, SectionWrapper)
+├── constants/       # Données centralisées (expériences, projets, certifications)
+├── hooks/           # Custom hooks (useMousePosition)
+└── index.css        # Thème global et utilitaires
+```
+
+## Contact
+
+**Email** — mendesvoufo.pro@gmail.com
