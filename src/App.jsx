@@ -1,23 +1,33 @@
-import Navbar from "./components/ui/Navbar";
-import Hero from "./components/sections/Hero";
-import About from "./components/sections/About";
-import Skills from "./components/sections/Skills";
-import Experience from "./components/sections/Experience";
-import Projects from "./components/sections/Projects";
-import Contact from "./components/sections/Contact";
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Navbar } from "./components/ui";
+import { Hero, CertBanner, About, Skills, Experience, Projects, Contact } from "./components/sections";
 
-const App = () => (
-  <>
-    <Navbar />
-    <main>
-      <Hero />
-      <About />
-      <Experience />
-      <Skills />
-      <Projects />
-      <Contact />
-    </main>
-  </>
-);
+gsap.registerPlugin(ScrollTrigger);
+
+const App = () => {
+  useEffect(() => {
+    const t1 = setTimeout(() => ScrollTrigger.refresh(true), 500);
+    const t2 = setTimeout(() => ScrollTrigger.refresh(true), 1500);
+    const t3 = setTimeout(() => ScrollTrigger.refresh(true), 3000);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, []);
+
+  return (
+    <>
+      <Navbar />
+      <main className="overflow-x-hidden">
+        <Hero />
+        <CertBanner />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Contact />
+      </main>
+    </>
+  );
+};
 
 export default App;

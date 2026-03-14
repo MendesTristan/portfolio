@@ -1,33 +1,20 @@
 import { useRef } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const SectionWrapper = ({ id, title, subtitle, children, className = "" }) => {
   const ref = useRef(null);
 
-  useGSAP(() => {
-    gsap.from(ref.current.querySelectorAll(".section-header > *"), {
-      y: 40,
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: "power3.out",
-      scrollTrigger: { trigger: ref.current, start: "top 85%" },
-    });
-  }, { scope: ref });
-
   return (
-    <section id={id} ref={ref} className={`relative py-24 md:py-32 px-6 overflow-hidden ${className}`}>
-      {/* Fade overlay so 3D bg blends */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/90 to-background pointer-events-none" />
+    <section id={id} ref={ref} className={`relative py-20 md:py-28 px-6 overflow-hidden ${className}`}>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/70 to-background pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="section-header text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-4">{title}</h2>
-          {subtitle && <p className="text-text-secondary text-lg max-w-2xl mx-auto">{subtitle}</p>}
+        <div className="mb-12 md:mb-16">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-px bg-gradient-to-r from-primary to-transparent" />
+            <span className="text-[10px] font-mono text-primary-light uppercase tracking-[0.2em]">{id}</span>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">{title}</h2>
+          {subtitle && <p className="text-text-muted text-sm max-w-lg">{subtitle}</p>}
         </div>
         {children}
       </div>

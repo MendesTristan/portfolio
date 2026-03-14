@@ -15,13 +15,14 @@
   --color-accent: #6366f1;
   --color-accent-cyan: #22d3ee;
 
-  --color-text-primary: #e2e8f0;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
 }
 
 html,
@@ -64,8 +65,9 @@ body,
     @apply bg-gradient-to-r from-primary via-primary-light to-accent bg-clip-text text-transparent;
   }
   .glass {
-    background: var(--color-card);
-    border: 1px solid var(--color-card-border);
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.18);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
   }
   .glow {
@@ -77,23 +79,88 @@ body,
   }
 }
 
-/* ── Hero Glass Panel ── */
-.hero-glass-panel {
-  background: rgba(10, 1, 24, 0.45);
-  border: 1px solid rgba(139, 92, 246, 0.1);
-  backdrop-filter: blur(24px) saturate(1.4);
-  box-shadow:
-    0 0 80px rgba(139, 92, 246, 0.06),
-    0 0 40px rgba(99, 102, 241, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  transition: box-shadow 0.6s ease, border-color 0.6s ease;
+/* ── Cloud Skill Cards ── */
+.skill-cloud-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
-.hero-glass-panel:hover {
-  box-shadow:
-    0 0 120px rgba(139, 92, 246, 0.1),
-    0 0 60px rgba(99, 102, 241, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border-color: rgba(139, 92, 246, 0.2);
+.skill-cloud-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cloud-color, #8b5cf6), transparent);
+  opacity: 0.4;
+}
+.skill-cloud-card:hover {
+  border-color: var(--cloud-color, rgba(139, 92, 246, 0.25));
+}
+
+/* Certification Badge */
+.skill-cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+
+/* Skill Tags (cloud cards) */
+.skill-tag {
+  display: inline-flex;
+  padding: 0.2rem 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.skill-tag:hover {
+  border-color: var(--tag-color, var(--color-primary));
+  color: var(--tag-color, var(--color-primary));
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Certification Banner (below Hero) ── */
+.cert-banner-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.cert-banner-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+}
+
+.cert-banner-item:hover .cert-banner-icon {
+  box-shadow: 0 0 20px var(--badge-glow, rgba(139, 92, 246, 0.2));
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 /* ── Typing Cursor Blink ── */
@@ -103,9 +170,4 @@ body,
 @keyframes cursorBlink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
-}
-
-/* ── Name Glow ── */
-.hero-name-glow {
-  text-shadow: 0 0 40px rgba(139, 92, 246, 0.3), 0 0 80px rgba(139, 92, 246, 0.1);
 }
