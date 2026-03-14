@@ -8,7 +8,7 @@ const Button = ({ children, href, variant = "primary", className = "" }) => {
   return (
     <Tag
       href={href}
-      className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs transition-all duration-300 cursor-pointer ${variants[variant]} ${className}`}
+      className={`inline-flex items-center gap-2.5 px-7 py-3 rounded-xl font-semibold text-sm transition-all duration-300 cursor-pointer ${variants[variant]} ${className}`}
     >
       {children}
     </Tag>

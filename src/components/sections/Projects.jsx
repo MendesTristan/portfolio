@@ -10,7 +10,7 @@ import { projects } from "../../constants/data";
 gsap.registerPlugin(ScrollTrigger);
 
 const ACCENT_COLORS = ["#8b5cf6", "#6366f1", "#06b6d4", "#10b981", "#f59e0b"];
-const TAG_CLS = "text-[10px] font-mono px-2 py-0.5 rounded-md bg-primary/[0.08] text-primary-light border border-primary/15";
+const TAG_CLS = "text-xs font-mono px-2.5 py-1 rounded-md bg-primary/[0.08] text-primary-light border border-primary/15";
 
 const Projects = () => {
   const inner = useRef(null);
@@ -28,17 +28,17 @@ const Projects = () => {
     <SectionWrapper id="projects" title="Projets" subtitle="Sélection de réalisations techniques.">
       <SceneBg mouseX={mouse.x} mouseY={mouse.y} variant="particles" />
 
-      <div ref={inner} className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4">
+      <div ref={inner} className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6">
         {projects.map((p, i) => {
           const color = ACCENT_COLORS[i % ACCENT_COLORS.length];
           return (
             <div key={i} data-gsap className="proj-card rounded-xl overflow-hidden bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-primary/20 hover:-translate-y-0.5 group">
               <div className="h-0.5" style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }} />
-              <div className="p-5">
+              <div className="p-6">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md" style={{ color, background: `${color}12`, border: `1px solid ${color}20` }}>{String(i + 1).padStart(2, "0")}</span>
-                    <h3 className="text-sm font-bold text-text-primary group-hover:text-primary-light transition-colors">{p.title}</h3>
+                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md" style={{ color, background: `${color}12`, border: `1px solid ${color}20` }}>{String(i + 1).padStart(2, "0")}</span>
+                    <h3 className="text-base font-bold text-text-primary group-hover:text-primary-light transition-colors">{p.title}</h3>
                   </div>
                   {p.link && (
                     <a href={p.link} target="_blank" rel="noreferrer" className="text-text-muted hover:text-primary-light transition-colors shrink-0">
@@ -48,8 +48,8 @@ const Projects = () => {
                     </a>
                   )}
                 </div>
-                <p className="text-text-secondary text-xs leading-relaxed mb-4">{p.description}</p>
-                <div className="flex flex-wrap gap-1.5">{p.stack.map((t, j) => <span key={j} className={TAG_CLS}>{t}</span>)}</div>
+                <p className="text-text-secondary text-sm leading-relaxed mb-4">{p.description}</p>
+                <div className="flex flex-wrap gap-2">{p.stack.map((t, j) => <span key={j} className={TAG_CLS}>{t}</span>)}</div>
               </div>
             </div>
           );

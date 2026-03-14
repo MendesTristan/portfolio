@@ -36,7 +36,7 @@ const CheckBadge = () => (
 const SubsectionTitle = ({ children }) => (
   <div className="flex items-center gap-3 mb-5">
     <div className="w-8 h-px bg-gradient-to-r from-primary to-transparent" />
-    <h3 className="text-[10px] font-semibold text-text-muted tracking-[0.15em] uppercase font-mono">{children}</h3>
+    <h3 className="text-xs font-semibold text-text-muted tracking-[0.15em] uppercase font-mono">{children}</h3>
   </div>
 );
 
@@ -48,13 +48,13 @@ const CloudCard = ({ cat }) => {
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg flex-center shrink-0" style={{ background: `${config.color}15`, color: config.color }}>{ICONS[cat.icon]}</div>
           <div>
-            <h4 className="font-semibold text-text-primary text-sm leading-tight">{cat.title}</h4>
-            <p className="text-[10px] font-mono text-text-muted mt-0.5">{config.certName}</p>
+            <h4 className="font-semibold text-text-primary text-base leading-tight">{cat.title}</h4>
+            <p className="text-xs font-mono text-text-muted mt-0.5">{config.certName}</p>
           </div>
         </div>
         <span className="skill-cert-badge shrink-0" style={{ borderColor: `${config.color}40`, color: config.color }}><CheckBadge />{config.certLabel}</span>
       </div>
-      <div className="flex flex-wrap gap-1.5 content-start mt-auto">
+      <div className="flex flex-wrap gap-2 content-start mt-auto">
         {cat.skills.map((skill) => (<span key={skill} className="skill-tag" style={{ "--tag-color": config.color }}>{skill}</span>))}
       </div>
     </div>
@@ -62,14 +62,14 @@ const CloudCard = ({ cat }) => {
 };
 
 const CoreCard = ({ cat, color }) => (
-  <div className="h-full flex flex-col rounded-xl p-4 bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-[var(--card-color)]" style={{ "--card-color": color }}>
-    <div className="flex items-center gap-2 mb-2.5">
+  <div className="h-full flex flex-col rounded-xl p-5 bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-[var(--card-color)]" style={{ "--card-color": color }}>
+    <div className="flex items-center gap-2.5 mb-3">
       <span style={{ color }} className="shrink-0">{ICONS[cat.icon]}</span>
-      <h4 className="text-[11px] font-bold tracking-[0.08em] uppercase" style={{ color }}>{cat.title}</h4>
+      <h4 className="text-xs font-bold tracking-[0.08em] uppercase" style={{ color }}>{cat.title}</h4>
     </div>
-    <div className="flex flex-wrap gap-1.5 content-start mt-auto">
+    <div className="flex flex-wrap gap-2 content-start mt-auto">
       {cat.skills.map((skill) => (
-        <span key={skill} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.05] text-text-muted transition-colors duration-200 hover:text-[var(--card-color)] hover:border-[var(--card-color)]" style={{ "--card-color": color }}>{skill}</span>
+        <span key={skill} className="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.05] text-text-muted transition-colors duration-200 hover:text-[var(--card-color)] hover:border-[var(--card-color)]" style={{ "--card-color": color }}>{skill}</span>
       ))}
     </div>
   </div>
@@ -96,15 +96,15 @@ const Skills = () => {
   return (
     <SectionWrapper id="skills" title="Compétences" subtitle="Stack technique & méthodologie.">
       <div ref={ref} className="max-w-5xl mx-auto">
-        <div className="mb-12">
+        <div className="mb-14">
           <SubsectionTitle>Plateformes Cloud</SubsectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             {cloudSkills.map((cat) => (<CloudCard key={cat.title} cat={cat} />))}
           </div>
         </div>
         <div>
           <SubsectionTitle>Compétences Techniques</SubsectionTitle>
-          <div className="skill-core-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="skill-core-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {coreSkills.map((cat, i) => (
               <div key={cat.title} data-gsap className="skill-core-item h-full">
                 <CoreCard cat={cat} color={CORE_COLORS[i % CORE_COLORS.length]} />

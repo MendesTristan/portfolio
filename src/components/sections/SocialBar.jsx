@@ -111,9 +111,9 @@ const SocialBar = () => {
   }, { scope: ref });
 
   return (
-    <div ref={ref} className="relative z-20 -mt-10 pb-4 px-6 md:px-12 lg:px-20">
+    <div ref={ref} className="relative z-20 mt-6 mb-6 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-wrap justify-start gap-3">
+        <div className="flex flex-wrap justify-start gap-4">
           {socialLinks.map((link) => (
             <SocialIcon key={link.name} link={link} />
           ))}

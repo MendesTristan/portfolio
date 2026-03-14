@@ -82,14 +82,14 @@ const CertBanner = () => {
   }, { scope: ref });
 
   return (
-    <div ref={ref} className="relative z-20 pb-6 px-6">
+    <div ref={ref} className="relative z-20 mb-8 px-6">
       <div className="max-w-3xl mx-auto">
         <div className="cert-banner-card">
           <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-0 py-5 px-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-0 py-6 px-8">
             {BADGES.map((badge, i) => (
               <div key={badge.name} className="flex items-center">
-                <div className="cert-banner-item group flex items-center gap-3 px-5 py-2 rounded-xl cursor-default transition-all duration-300">
+                <div className="cert-banner-item group flex items-center gap-3 px-6 py-3 rounded-xl cursor-default transition-all duration-300">
                   <div className="cert-banner-icon" style={{ "--badge-glow": badge.glow }}>{badge.icon}</div>
                   <span className="text-xs font-medium text-text-secondary group-hover:text-text-primary transition-colors whitespace-nowrap">{badge.name}</span>
                 </div>

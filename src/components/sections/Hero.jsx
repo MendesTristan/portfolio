@@ -69,7 +69,7 @@ const useTypingEffect = (strings, typingSpeed = 80, deletingSpeed = 40, pauseMs 
 
 const FallbackAvatar = () => (
   <div className="absolute inset-0 flex-center bg-gradient-to-br from-primary/20 via-surface to-primary-dark/20">
-    <span className="text-4xl md:text-5xl font-black gradient-text select-none">TM</span>
+    <span className="text-5xl md:text-6xl font-black gradient-text select-none">TM</span>
   </div>
 );
 
@@ -133,11 +133,11 @@ const Hero = () => {
 
         {/* Left: Text Content */}
         <div className="hero-left text-left">
-          <p className="hero-label text-primary-light font-mono text-xs md:text-sm mb-5 tracking-[0.25em] uppercase">
+          <p className="hero-label text-primary-light font-mono text-sm md:text-base mb-5 tracking-[0.25em] uppercase">
             Data Engineering &amp; Cloud Architecture
           </p>
 
-          <h1 className="hero-name text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black mb-3 leading-[0.95] tracking-tight">
+          <h1 className="hero-name text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 leading-[0.95] tracking-tight">
             <span className="hero-name-glow gradient-text">Tristan</span>
             <br />
             <span className="text-text-primary">Mendes</span>
@@ -146,13 +146,13 @@ const Hero = () => {
           {/* Typing effect */}
           <div className="hero-typing-row flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent" />
-            <p className="text-sm md:text-base text-text-secondary font-light min-h-[1.5rem]">
+            <p className="text-base md:text-lg text-text-secondary font-light min-h-[1.75rem]">
               <span>{typed}</span>
               <span className="hero-cursor inline-block w-[2px] h-5 bg-primary-light ml-0.5 align-middle" />
             </p>
           </div>
 
-          <p className="hero-desc text-text-muted text-xs mb-7 font-mono max-w-md leading-relaxed">
+          <p className="hero-desc text-text-muted text-sm mb-8 font-mono max-w-lg leading-relaxed">
             Passionné par l&apos;innovation technologique, j&apos;utilise l&apos;IA et l&apos;automatisation des pipelines de données pour résoudre des problèmes complexes et livrer des solutions fiables.
           </p>
 
