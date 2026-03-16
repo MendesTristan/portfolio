@@ -201,8 +201,8 @@ export const certifications = [
 ];
 
 export const socialLinks = [
-  { name: "LinkedIn", url: "https://www.linkedin.com/in/tristan-mendes-voufo", color: "#0A66C2" },
-  { name: "GitHub", url: "https://github.com/tristan-mendes", color: "#8b5cf6" },
+  { name: "LinkedIn", url: "https://www.linkedin.com/in/tristanmendes-v/", color: "#0A66C2" },
+  { name: "GitHub", url: "https://github.com/MendesTristan", color: "#8b5cf6" },
   { name: "Email", url: "mailto:mendesvoufo.pro@gmail.com", color: "#ea4335" },
 ];
 
