@@ -3,6 +3,7 @@ export const navLinks = [
   { href: "#skills", label: "Compétences" },
   { href: "#experience", label: "Expériences" },
   { href: "#projects", label: "Projets" },
+  { href: "#hackathons", label: "Hackathons" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -143,31 +144,39 @@ export const experiences = [
 export const projects = [
   {
     title: "BNP Paribas – Regulatory Services",
+    type: "Finance de Marché",
     period: "2025",
     description:
-      "Tests automatisés BDD pour rapports réglementaires bancaires. Validation des flux de données critiques en environnement de finance de marché.",
-    stack: ["C#", "SpecFlow", "Gherkin", "Jenkins", "SQL Server", "Elasticsearch"],
+      "Architecture et automatisation de 6 scénarios de tests BDD critiques (SpecFlow/Gherkin) pour les rapports réglementaires. Couverture de 5 zones géographiques (Europe, APAC, NAR), monitoring Kibana temps réel, qualité validée en chaîne CI/CD Jenkins.",
+    impact: "100% conformité production",
+    stack: ["C#", ".NET 8", "SpecFlow", "Gherkin", "Jenkins", "SQL Server", "Elasticsearch", "Kibana"],
   },
   {
     title: "Signo'Lib",
+    type: "Application Mobile",
     period: "Nov. 2024 – Févr. 2025",
     description:
-      "Application mobile inclusive pour la mise en relation des sourds et malentendants avec des interprètes LSF. Projet Agile en équipe de 5.",
-    stack: ["React Native", "Node.js", "Express", "Agile"],
+      "Application mobile inclusive connectant les sourds et malentendants avec des interprètes LSF certifiés en temps réel. Architecture full-stack React Native + API REST Node.js, authentification sécurisée, sprints Agile en équipe de 5.",
+    impact: "MVP livré en 4 mois",
+    stack: ["React Native", "Node.js", "Express", "MongoDB", "Agile"],
   },
   {
-    title: "CI/CD Automation",
+    title: "Pipeline CI/CD End-to-End",
+    type: "DevOps & Cloud",
     period: "Nov. 2024",
     description:
-      "Pipeline CI/CD complet : build, test, déploiement automatisé avec conteneurisation et orchestration.",
-    stack: ["Docker", "Kubernetes", "GitHub Actions", "Ansible", "Maven"],
+      "Pipeline d'intégration et déploiement continu complet : conteneurisation Docker multi-stage, orchestration Kubernetes, provisionnement Ansible, tests automatisés. Élimination des erreurs manuelles et déploiement en 1 clic.",
+    impact: "−80% temps déploiement",
+    stack: ["Docker", "Kubernetes", "GitHub Actions", "Ansible", "Maven", "Terraform"],
   },
   {
-    title: "Machine Learning Project",
+    title: "Modèle ML – Prédiction & Classification",
+    type: "Data Science",
     period: "Avr. 2024",
     description:
-      "Préparation de datasets, sélection et entraînement de modèles ML. Classification et régression sur données réelles.",
-    stack: ["Python", "Pandas", "scikit-learn", "Random Forest", "kNN"],
+      "Benchmark de modèles supervisés (Random Forest, kNN, SVM) sur datasets réels. Feature engineering avancé, cross-validation stratifiée, tuning hyperparamètres par grid search. Analyse d'importance des features et interprétabilité.",
+    impact: "R² > 0.85 atteint",
+    stack: ["Python", "Pandas", "scikit-learn", "Random Forest", "kNN", "Matplotlib"],
   },
 ];
 
@@ -198,6 +207,50 @@ export const formations = [
 export const certifications = [
   { name: "Microsoft Azure Fundamentals AZ-900", issuer: "Microsoft", status: "obtained", badge: "Azure AZ-900" },
   { name: "Google Cloud – Associate Data Practitioner", issuer: "Google", status: "obtained", badge: "GCP Data Practitioner" },
+];
+
+export const hackathons = [
+  {
+    theme: "google",
+    title: "Hackathon Deloitte x Google Cloud",
+    date: "28 novembre 2024",
+    location: "La Défense – Tour Majunga, Paris",
+    description: "Challenge tech d'une journée autour du Cloud, de l'IA et de la Data. Résolution de cas métier réels via la création d'agents IA de bout en bout sur Google Cloud avec l'Agent Development Kit (ADK) de Google : un agent de gestion de campagnes Marketing et un agent de prédiction du taux de change de devises internationales basé sur des données temps réel du web.",
+    highlights: [
+      "Cas métier : conception d'un agent IA de gestion de campagnes Marketing (ciblage, personnalisation, optimisation budgétaire)",
+      "Cas métier : développement d'un agent IA de prédiction du taux de change multi-devises à partir de données web temps réel",
+      "Utilisation de l'Agent Development Kit (ADK) de Google pour orchestrer les agents de bout en bout",
+      "Pitch final et remise des prix devant un jury d'experts Deloitte & Google Cloud",
+    ],
+    stack: ["Google Cloud", "Agent Development Kit (ADK)", "Vertex AI", "BigQuery", "Gemini", "Python", "Cloud Functions"],
+    photos: [
+      "/assets/hackathons/deloitte-gcloud-1.png",
+      "/assets/hackathons/deloitte-gcloud-2.png",
+      "/assets/hackathons/deloitte-gcloud-3.png",
+      "/assets/hackathons/deloitte-gcloud-4.png",
+      "/assets/hackathons/deloitte-gcloud-5.png",
+      "/assets/hackathons/deloitte-gcloud-6.png",
+    ],
+    organizers: ["Deloitte", "Google Cloud"],
+  },
+  {
+    theme: "ey",
+    title: "Open Science AI & Data Challenge 2026",
+    date: "Janvier – Mars 2026",
+    location: "Full Remote – Compétition mondiale",
+    description: "Challenge international Data & IA organisé par EY en partenariat avec Snowflake. Objectif : développer un modèle de Machine Learning capable de prédire la qualité de l'eau dans les rivières d'Afrique du Sud, afin de garantir un accès équitable et durable à l'eau potable pour les populations vulnérables.",
+    highlights: [
+      "Développement d'un modèle ML de prédiction de 3 paramètres de qualité de l'eau (alcalinité, conductance, phosphore dissous)",
+      "Feature engineering avancé à partir de données géospatiales, satellites Landsat et TerraClimate",
+      "Entraînement et optimisation sur ~200 sites de rivières sud-africaines (2011-2015), validation sur des régions inédites",
+      "Score évalué sur le R² moyen des 3 paramètres – classement mondial face à des étudiants du monde entier",
+    ],
+    stack: ["Python", "Snowflake", "scikit-learn", "Landsat", "TerraClimate", "Pandas", "Machine Learning"],
+    photos: [
+      "/assets/hackathons/ey-challenge-banner.png",
+    ],
+    organizers: ["EY", "Snowflake"],
+  },
 ];
 
 export const socialLinks = [

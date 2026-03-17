@@ -2,6 +2,7 @@ import { Suspense, Component } from "react";
 import { Canvas } from "@react-three/fiber";
 import ParticleField from "./ParticleField";
 import FloatingGeometry from "./FloatingGeometry";
+import PipelineField from "./PipelineField";
 
 class SceneErrorBoundary extends Component {
   state = { hasError: false };
@@ -24,6 +25,7 @@ const SceneBg = ({ mouseX = 0, mouseY = 0, variant = "particles" }) => (
           <ambientLight intensity={0.15} />
           {variant === "particles" && <ParticleField mouseX={mouseX} mouseY={mouseY} />}
           {variant === "geometry" && <FloatingGeometry mouseX={mouseX} mouseY={mouseY} />}
+          {variant === "pipeline" && <PipelineField mouseX={mouseX} mouseY={mouseY} />}
           {variant === "both" && (
             <>
               <ParticleField count={150} mouseX={mouseX} mouseY={mouseY} />
