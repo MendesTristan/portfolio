@@ -23,7 +23,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
-  font-size: 20px;
+  font-size: clamp(14px, 0.6vw + 12px, 20px);
 }
 
 html,
@@ -85,10 +85,15 @@ body,
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   transition: border-color 0.3s ease;
   position: relative;
   overflow: hidden;
+}
+@media (min-width: 640px) {
+  .skill-cloud-card {
+    padding: 1.5rem;
+  }
 }
 .skill-cloud-card::before {
   content: "";
@@ -112,22 +117,33 @@ body,
   padding: 0.25rem 0.65rem;
   border: 1px solid;
   border-radius: 9999px;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 600;
   font-family: var(--font-mono);
   letter-spacing: 0.03em;
+}
+@media (min-width: 640px) {
+  .skill-cert-badge {
+    font-size: 0.65rem;
+  }
 }
 
 /* Skill Tags (cloud cards) */
 .skill-tag {
   display: inline-flex;
-  padding: 0.3rem 0.7rem;
+  padding: 0.25rem 0.55rem;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--color-text-secondary);
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+@media (min-width: 640px) {
+  .skill-tag {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8rem;
+  }
 }
 .skill-tag:hover {
   border-color: var(--tag-color, var(--color-primary));
@@ -147,8 +163,8 @@ body,
 }
 
 .cert-banner-icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -156,6 +172,12 @@ body,
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
   transition: box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+}
+@media (min-width: 640px) {
+  .cert-banner-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 .cert-banner-item:hover .cert-banner-icon {
@@ -171,4 +193,16 @@ body,
 @keyframes cursorBlink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
+}
+
+/* ── Fix touch targets for mobile ── */
+@media (max-width: 639px) {
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  nav a, nav button, .social-icon-card, .cert-banner-item {
+    min-height: auto;
+    min-width: auto;
+  }
 }

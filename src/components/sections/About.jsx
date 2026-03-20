@@ -3,13 +3,13 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMousePosition } from "../../hooks";
+import { useLanguage } from "../../i18n";
 import SectionWrapper from "../ui/SectionWrapper";
 import SceneBg from "../three/SceneBg";
-import { stats, aboutExtras, formations, certifications } from "../../constants/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CARD_CLS = "flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-primary/20";
+const CARD_CLS = "flex items-center gap-3 px-3 sm:px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-primary/20";
 
 const extraIcons = {
   globe: (
@@ -50,9 +50,23 @@ const anim = (targets, vars, scope) => {
   });
 };
 
+const RenderBio = ({ html }) => {
+  const rendered = html
+    .replace(/<hl>/g, '<span class="text-primary-light font-medium">')
+    .replace(/<\/hl>/g, "</span>");
+  return <p data-gsap className="about-p text-text-secondary text-sm sm:text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: rendered }} />;
+};
+
 const About = () => {
   const inner = useRef(null);
   const mouse = useMousePosition(0.02);
+  const { t } = useLanguage();
+
+  const aboutT = t("about");
+  const statsData = t("stats");
+  const extras = t("aboutExtras");
+  const formationsData = t("formations");
+  const certsData = t("certifications");
 
   useGSAP(() => {
     const s = inner.current;
@@ -63,35 +77,30 @@ const About = () => {
   }, { scope: inner });
 
   return (
-    <SectionWrapper id="about" title="À propos" subtitle="Data Engineering, cloud et bien plus.">
+    <SectionWrapper id="about" title={aboutT.title} subtitle={aboutT.subtitle}>
       <SceneBg mouseX={mouse.x} mouseY={mouse.y} variant="particles" />
 
       <div ref={inner} className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 mb-16">
-          {stats.map(({ value, label }, i) => (
-            <div key={i} data-gsap className="stat-card rounded-xl p-5 text-center bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-primary/20">
-              <div className="text-2xl md:text-3xl font-bold gradient-text mb-1">{value}</div>
-              <div className="text-text-muted text-xs">{label}</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 mb-12 sm:mb-16">
+          {statsData.map(({ value, label }, i) => (
+            <div key={i} data-gsap className="stat-card rounded-xl p-4 sm:p-5 text-center bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-primary/20">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text mb-1">{value}</div>
+              <div className="text-text-muted text-[10px] sm:text-xs">{label}</div>
             </div>
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-14 lg:gap-16">
+        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
           <div className="lg:col-span-3 space-y-6">
-            <p data-gsap className="about-p text-text-secondary text-base leading-relaxed">
-              Ingénieur <span className="text-primary-light font-medium">Data &amp; Cloud</span> (EFREI Paris, Bac+5), je conçois et industrialise des <span className="text-primary-light font-medium">pipelines ETL/ELT</span>, des architectures <span className="text-primary-light font-medium">data lake</span> et des workflows d&apos;orchestration sur environnements <span className="text-primary-light font-medium">multi-cloud</span>.
-            </p>
-            <p data-gsap className="about-p text-text-secondary text-base leading-relaxed">
-              Forgé chez <span className="text-primary-light font-medium">BNP Paribas CIB</span>, je maîtrise les contraintes de volumétrie, de qualité de données et de conformité. Double certifié <span className="text-primary-light font-medium">Azure AZ-900</span> et <span className="text-primary-light font-medium">GCP Associate Data Practitioner</span>.
-            </p>
+            {aboutT.bio.map((b, i) => <RenderBio key={i} html={b} />)}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-              {aboutExtras.map((item, i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-4">
+              {extras.map((item, i) => (
                 <div key={i} data-gsap className={`extra-card ${CARD_CLS}`}>
                   <span className="text-primary-light shrink-0">{extraIcons[item.icon]}</span>
                   <div className="min-w-0">
-                    <span className="text-xs text-text-muted uppercase tracking-[0.15em]">{item.label}</span>
-                    <p className="text-text-primary text-sm font-medium truncate">{item.text}</p>
+                    <span className="text-[10px] sm:text-xs text-text-muted uppercase tracking-[0.15em]">{item.label}</span>
+                    <p className="text-text-primary text-xs sm:text-sm font-medium truncate">{item.text}</p>
                   </div>
                 </div>
               ))}
@@ -101,28 +110,28 @@ const About = () => {
           <div className="lg:col-span-2">
             <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-text-muted mb-5 flex items-center gap-2">
               <div className="w-6 h-px bg-primary/40" />
-              Formation
+              {aboutT.education}
             </h3>
 
             <div className="edu-timeline relative pl-7 mb-10">
               <div className="absolute left-[5px] top-1 bottom-1 w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent" />
-              {formations.map((f, i) => (
+              {formationsData.map((f, i) => (
                 <div key={i} data-gsap className="edu-item relative mb-8 last:mb-0">
                   <div className="absolute -left-7 top-1.5 w-[13px] h-[13px] rounded-full bg-primary border-2 border-background z-10" />
                   <span className="text-xs font-mono text-text-muted">{f.period}</span>
-                  <h4 className="text-base font-semibold text-text-primary mt-0.5 leading-snug">{f.title}</h4>
-                  <p className="text-primary-light text-sm mt-0.5">{f.school}</p>
+                  <h4 className="text-sm sm:text-base font-semibold text-text-primary mt-0.5 leading-snug">{f.title}</h4>
+                  <p className="text-primary-light text-xs sm:text-sm mt-0.5">{f.school}</p>
                 </div>
               ))}
             </div>
 
             <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-text-muted mb-4 flex items-center gap-2">
               <div className="w-6 h-px bg-primary/40" />
-              Certifications
+              {aboutT.certifications}
             </h3>
 
             <div className="space-y-4">
-              {certifications.map((c, i) => (
+              {certsData.map((c, i) => (
                 <div key={i} className={CARD_CLS}>
                   <div className="w-8 h-8 rounded-xl bg-primary/[0.08] flex-center shrink-0">
                     <svg className="w-4 h-4 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -130,10 +139,10 @@ const About = () => {
                     </svg>
                   </div>
                   <div className="min-w-0">
-                    <h4 className="text-sm font-semibold text-text-primary truncate">{c.name}</h4>
+                    <h4 className="text-xs sm:text-sm font-semibold text-text-primary truncate">{c.name}</h4>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className="text-xs text-text-muted">{c.issuer}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-green-500/10 text-green-400">Obtenue</span>
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-green-500/10 text-green-400">{aboutT.obtained}</span>
                     </div>
                   </div>
                 </div>

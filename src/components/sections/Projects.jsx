@@ -3,9 +3,9 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMousePosition } from "../../hooks";
+import { useLanguage } from "../../i18n";
 import SectionWrapper from "../ui/SectionWrapper";
 import SceneBg from "../three/SceneBg";
-import { projects } from "../../constants/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +18,6 @@ const DATA_TOKENS = [
   "0b1010", "merge", "→", "∞", "docker", "k8s",
 ];
 
-/* ── Futuristic sound via Web Audio API ── */
 const playPulse = (idx) => {
   try {
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -53,10 +52,9 @@ const playPulse = (idx) => {
   } catch (_) { /* Audio API unavailable */ }
 };
 
-/* ── Impact badge ── */
 const ImpactBadge = ({ text, color }) => (
   <span
-    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-semibold whitespace-nowrap"
+    className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold whitespace-nowrap"
     style={{ color, background: `${color}0c`, border: `1px solid ${color}20` }}
   >
     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -66,21 +64,23 @@ const ImpactBadge = ({ text, color }) => (
   </span>
 );
 
-/* ── Tech tag ── */
 const Tag = ({ name, color }) => (
   <span
-    className="proj-tag text-[11px] font-mono px-2.5 py-1 rounded-lg cursor-default transition-all duration-300 hover:scale-105"
+    className="proj-tag text-[10px] sm:text-[11px] font-mono px-2 sm:px-2.5 py-1 rounded-lg cursor-default transition-all duration-300 hover:scale-105"
     style={{ background: `${color}0c`, border: `1px solid ${color}1a`, color: `${color}cc` }}
   >
     {name}
   </span>
 );
 
-/* ── Main component ── */
 const Projects = () => {
   const [active, setActive] = useState(null);
   const ref = useRef(null);
   const mouse = useMousePosition(0.02);
+  const { t } = useLanguage();
+
+  const projT = t("projects");
+  const projects = t("projectsList");
 
   const toggle = useCallback((idx) => {
     playPulse(idx);
@@ -130,12 +130,11 @@ const Projects = () => {
   }, { scope: ref });
 
   return (
-    <SectionWrapper id="projects" title="Projets" subtitle="Réalisations techniques à fort impact.">
+    <SectionWrapper id="projects" title={projT.title} subtitle={projT.subtitle}>
       <SceneBg mouseX={mouse.x} mouseY={mouse.y} variant="pipeline" />
 
-      {/* Floating data tokens */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-        {DATA_TOKENS.map((t, i) => (
+        {DATA_TOKENS.map((tk, i) => (
           <span
             key={i}
             className="data-tok absolute text-[10px] font-mono select-none"
@@ -145,13 +144,12 @@ const Projects = () => {
               top: `${8 + ((i * 7.7) % 82)}%`,
             }}
           >
-            {t}
+            {tk}
           </span>
         ))}
       </div>
 
       <div ref={ref} className="max-w-5xl mx-auto relative" style={{ zIndex: 5 }}>
-        {/* Pipeline rail (desktop) */}
         <div className="hidden md:block absolute left-5 top-4 bottom-4 w-px overflow-hidden">
           <div
             className="pipeline-rail w-full h-full"
@@ -162,15 +160,13 @@ const Projects = () => {
           />
         </div>
 
-        {/* Project rows */}
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5">
           {projects.map((p, i) => {
             const color = COLORS[i % COLORS.length];
             const isOpen = active === i;
 
             return (
               <div key={i} className="proj-row relative md:pl-16">
-                {/* Pipeline dot */}
                 <button
                   onClick={() => toggle(i)}
                   className="pipe-dot absolute left-5 top-8 z-20 hidden md:flex items-center justify-center w-8 h-8 -translate-x-1/2"
@@ -189,7 +185,6 @@ const Projects = () => {
                   />
                 </button>
 
-                {/* Card */}
                 <div
                   className="group rounded-2xl overflow-hidden cursor-pointer transition-all duration-500"
                   style={{
@@ -199,7 +194,6 @@ const Projects = () => {
                   }}
                   onClick={() => toggle(i)}
                 >
-                  {/* Accent bar */}
                   <div
                     className="h-[2px] transition-opacity duration-500"
                     style={{
@@ -208,52 +202,49 @@ const Projects = () => {
                     }}
                   />
 
-                  <div className="p-6">
-                    {/* Header */}
+                  <div className="p-4 sm:p-6">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
-                      <div className="flex items-start gap-3 min-w-0">
+                      <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
                         <span
-                          className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg shrink-0 mt-0.5"
+                          className="text-[10px] sm:text-xs font-mono font-bold px-2 sm:px-2.5 py-1 rounded-lg shrink-0 mt-0.5"
                           style={{ color, background: `${color}10`, border: `1px solid ${color}20` }}
                         >
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <div className="min-w-0">
-                          <h3 className="text-base font-bold text-text-primary group-hover:text-primary-light transition-colors truncate">
+                          <h3 className="text-sm sm:text-base font-bold text-text-primary group-hover:text-primary-light transition-colors truncate">
                             {p.title}
                           </h3>
-                          <div className="flex flex-wrap items-center gap-2.5 mt-1">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-1">
                             <span
-                              className="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full"
+                              className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest px-1.5 sm:px-2 py-0.5 rounded-full"
                               style={{ color: `${color}bb`, background: `${color}08`, border: `1px solid ${color}12` }}
                             >
                               {p.type}
                             </span>
-                            <span className="text-xs font-mono text-text-muted">{p.period}</span>
+                            <span className="text-[11px] sm:text-xs font-mono text-text-muted">{p.period}</span>
                           </div>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3 shrink-0">
+                      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                         {p.impact && <ImpactBadge text={p.impact} color={color} />}
                         <div
-                          className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300"
+                          className="w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center transition-all duration-300"
                           style={{
                             background: `${color}10`,
                             transform: isOpen ? "rotate(45deg)" : "rotate(0)",
                           }}
                         >
-                          <svg className="w-3 h-3" style={{ color }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                          <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" style={{ color }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                           </svg>
                         </div>
                       </div>
                     </div>
 
-                    {/* Description */}
-                    <p className="text-sm text-text-secondary leading-relaxed md:ml-10">{p.description}</p>
+                    <p className="text-xs sm:text-sm text-text-secondary leading-relaxed md:ml-10">{p.description}</p>
 
-                    {/* Expandable tech stack */}
                     <div
                       className="overflow-hidden transition-all duration-500 ease-in-out md:ml-10"
                       style={{
@@ -267,11 +258,11 @@ const Projects = () => {
                           className="text-[10px] font-mono uppercase tracking-widest block mb-3"
                           style={{ color: `${color}90` }}
                         >
-                          stack technique
+                          {projT.techStack}
                         </span>
-                        <div className="flex flex-wrap gap-2">
-                          {p.stack.map((t, j) => (
-                            <Tag key={j} name={t} color={color} />
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                          {p.stack.map((tech, j) => (
+                            <Tag key={j} name={tech} color={color} />
                           ))}
                         </div>
                       </div>

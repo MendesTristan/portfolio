@@ -2,12 +2,11 @@ import { useRef, useState, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "../../i18n";
 import SectionWrapper from "../ui/SectionWrapper";
-import { hackathons } from "../../constants/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Brand color palettes ── */
 const THEMES = {
   google: {
     dots: ["#4285F4", "#EA4335", "#FBBC05", "#34A853"],
@@ -41,7 +40,6 @@ const THEMES = {
   },
 };
 
-/* ── Decorative floating orbs ── */
 const FloatingOrbs = ({ colors }) => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {colors.map((c, i) => (
@@ -60,7 +58,6 @@ const FloatingOrbs = ({ colors }) => (
   </div>
 );
 
-/* ── Colored dot rail ── */
 const BrandRail = ({ colors }) => (
   <div className="flex items-center gap-2.5 mb-6">
     {colors.map((c, i) => (
@@ -77,7 +74,6 @@ const BrandRail = ({ colors }) => (
   </div>
 );
 
-/* ── Organizer pills ── */
 const OrgPills = ({ organizers, theme }) => (
   <div className="flex flex-wrap gap-2 mb-2">
     {organizers.map((o) => (
@@ -92,44 +88,38 @@ const OrgPills = ({ organizers, theme }) => (
   </div>
 );
 
-/* ── Date / location meta ── */
 const Meta = ({ date, location, colors }) => (
-  <div className="flex flex-wrap gap-4">
-    <span className="flex items-center gap-2 text-xs font-mono text-text-muted">
+  <div className="flex flex-wrap gap-3 sm:gap-4">
+    <span className="flex items-center gap-2 text-[11px] sm:text-xs font-mono text-text-muted">
       <span className="w-1.5 h-1.5 rounded-full" style={{ background: colors[0] }} />
       {date}
     </span>
-    <span className="flex items-center gap-2 text-xs font-mono text-text-muted">
+    <span className="flex items-center gap-2 text-[11px] sm:text-xs font-mono text-text-muted">
       <span className="w-1.5 h-1.5 rounded-full" style={{ background: colors[1] || colors[0] }} />
       {location}
     </span>
   </div>
 );
 
-/* ── Highlight bullet ── */
 const Bullet = ({ text, color }) => (
   <li className="hack-hl flex gap-3 group">
     <span
       className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 group-hover:scale-[2] transition-transform duration-300"
       style={{ background: color, boxShadow: `0 0 8px ${color}50` }}
     />
-    <span className="text-sm text-text-secondary leading-relaxed">{text}</span>
+    <span className="text-xs sm:text-sm text-text-secondary leading-relaxed">{text}</span>
   </li>
 );
 
-/* ── Tech tag ── */
 const Tag = ({ name, theme }) => (
   <span
-    className="hack-tag text-xs font-mono px-2.5 py-1 rounded-lg cursor-default hover:scale-105 transition-transform duration-300"
+    className="hack-tag text-[11px] sm:text-xs font-mono px-2 sm:px-2.5 py-1 rounded-lg cursor-default hover:scale-105 transition-transform duration-300"
     style={{ background: theme.tagBg, border: `1px solid ${theme.tagBorder}`, color: theme.tagText }}
   >
     {name}
   </span>
 );
 
-/* ══════════════════════════════════════════════════════
-   3D PHOTO STACK – navigable stacked cards
-   ══════════════════════════════════════════════════════ */
 const PhotoStack = ({ photos, title, theme }) => {
   const [cur, setCur] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -164,28 +154,28 @@ const PhotoStack = ({ photos, title, theme }) => {
       {photos.map((p, i) => {
         const off = i - cur;
         const abs = Math.abs(off);
-        const active = i === cur;
+        const isActive = i === cur;
         return (
           <div
             key={i}
             className="absolute inset-0 rounded-2xl overflow-hidden"
             style={{
               transform: [
-                `rotateX(${active ? tilt.x : 0}deg)`,
-                `rotateY(${active ? tilt.y : 0}deg)`,
-                `translateZ(${active ? 0 : -35 * abs}px)`,
+                `rotateX(${isActive ? tilt.x : 0}deg)`,
+                `rotateY(${isActive ? tilt.y : 0}deg)`,
+                `translateZ(${isActive ? 0 : -35 * abs}px)`,
                 `translateX(${off * 10}px)`,
                 `translateY(${off * 5}px)`,
-                `scale(${active ? 1 : 0.94 - abs * 0.02})`,
+                `scale(${isActive ? 1 : 0.94 - abs * 0.02})`,
               ].join(" "),
               transition: "transform .5s cubic-bezier(.4,0,.2,1), opacity .4s, filter .4s",
               zIndex: photos.length - abs,
               opacity: abs > 2 ? 0 : 1 - abs * 0.25,
-              filter: active ? "none" : `brightness(${0.55 - abs * 0.08})`,
+              filter: isActive ? "none" : `brightness(${0.55 - abs * 0.08})`,
             }}
           >
             <img src={p} alt={`${title} ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
-            {active && <div className="absolute inset-0" style={{ background: theme.overlay }} />}
+            {isActive && <div className="absolute inset-0" style={{ background: theme.overlay }} />}
           </div>
         );
       })}
@@ -218,9 +208,6 @@ const PhotoStack = ({ photos, title, theme }) => {
   );
 };
 
-/* ══════════════════════════════════════════════════════
-   3D BANNER – tilt-on-hover hero image
-   ══════════════════════════════════════════════════════ */
 const Banner3D = ({ src, title, theme }) => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const ref = useRef(null);
@@ -237,7 +224,7 @@ const Banner3D = ({ src, title, theme }) => {
   return (
     <div
       ref={ref}
-      className="relative w-full h-52 sm:h-64 md:h-80 overflow-hidden"
+      className="relative w-full h-40 sm:h-52 md:h-64 lg:h-80 overflow-hidden"
       style={{ perspective: "1200px" }}
       onMouseMove={onMove}
       onMouseLeave={() => setTilt({ x: 0, y: 0 })}
@@ -253,37 +240,33 @@ const Banner3D = ({ src, title, theme }) => {
   );
 };
 
-/* ══════════════════════════════════════════════════════
-   LAYOUT A — Split: 3D photo stack left + content right
-   (Deloitte x Google Cloud)
-   ══════════════════════════════════════════════════════ */
-const LayoutSplit = ({ hack, theme, num }) => (
+const LayoutSplit = ({ hack, theme, num, hackT }) => (
   <article
-    className="hack-card relative rounded-3xl overflow-hidden"
+    className="hack-card relative rounded-2xl sm:rounded-3xl overflow-hidden"
     style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}` }}
   >
     <FloatingOrbs colors={theme.dots} />
     <div className="absolute top-0 inset-x-0 h-[2px]" style={{ background: theme.gradient }} />
 
     <span
-      className="absolute top-4 right-6 text-[80px] md:text-[120px] font-black leading-none select-none pointer-events-none opacity-[0.03]"
+      className="absolute top-4 right-4 sm:right-6 text-[60px] sm:text-[80px] md:text-[120px] font-black leading-none select-none pointer-events-none opacity-[0.03]"
       style={{ color: theme.accentA }}
     >
       {num}
     </span>
 
-    <div className="relative z-10 p-6 md:p-10">
+    <div className="relative z-10 p-4 sm:p-6 md:p-10">
       <BrandRail colors={theme.dots} />
       <OrgPills organizers={hack.organizers} theme={theme} />
-      <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-1">{hack.title}</h3>
-      <div className="mb-8">
+      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary mb-1">{hack.title}</h3>
+      <div className="mb-6 sm:mb-8">
         <Meta date={hack.date} location={hack.location} colors={theme.dots} />
       </div>
 
-      <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 items-start mb-8">
+      <div className="grid md:grid-cols-[1fr_1.2fr] gap-6 sm:gap-8 items-start mb-6 sm:mb-8">
         <PhotoStack photos={hack.photos} title={hack.title} theme={theme} />
-        <div className="space-y-5">
-          <p className="text-sm text-text-secondary leading-relaxed">{hack.description}</p>
+        <div className="space-y-4 sm:space-y-5">
+          <p className="text-xs sm:text-sm text-text-secondary leading-relaxed">{hack.description}</p>
           <ul className="space-y-3">
             {hack.highlights.map((h, i) => (
               <Bullet key={i} text={h} color={theme.dots[i % theme.dots.length]} />
@@ -292,22 +275,18 @@ const LayoutSplit = ({ hack, theme, num }) => (
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 pt-6" style={{ borderTop: `1px solid ${theme.cardBorder}` }}>
-        {hack.stack.map((t, i) => (
-          <Tag key={i} name={t} theme={theme} />
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-4 sm:pt-6" style={{ borderTop: `1px solid ${theme.cardBorder}` }}>
+        {hack.stack.map((techItem, i) => (
+          <Tag key={i} name={techItem} theme={theme} />
         ))}
       </div>
     </div>
   </article>
 );
 
-/* ══════════════════════════════════════════════════════
-   LAYOUT B — Cinematic: banner hero + floating overlay
-   (EY Open Science Challenge)
-   ══════════════════════════════════════════════════════ */
-const LayoutCinematic = ({ hack, theme, num }) => (
+const LayoutCinematic = ({ hack, theme, num, hackT }) => (
   <article
-    className="hack-card relative rounded-3xl overflow-hidden"
+    className="hack-card relative rounded-2xl sm:rounded-3xl overflow-hidden"
     style={{ background: theme.cardBg, border: `1px solid ${theme.cardBorder}` }}
   >
     <FloatingOrbs colors={theme.dots} />
@@ -315,9 +294,9 @@ const LayoutCinematic = ({ hack, theme, num }) => (
 
     <Banner3D src={hack.photos[0]} title={hack.title} theme={theme} />
 
-    <div className="relative z-10 -mt-20 mx-4 md:mx-8 mb-6 md:mb-10">
+    <div className="relative z-10 -mt-12 sm:-mt-16 md:-mt-20 mx-3 sm:mx-4 md:mx-8 mb-4 sm:mb-6 md:mb-10">
       <div
-        className="rounded-2xl p-6 md:p-8"
+        className="rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8"
         style={{
           background: "rgba(3,0,20,0.88)",
           backdropFilter: "blur(24px)",
@@ -326,7 +305,7 @@ const LayoutCinematic = ({ hack, theme, num }) => (
         }}
       >
         <span
-          className="absolute top-4 right-6 text-[70px] md:text-[100px] font-black leading-none select-none pointer-events-none opacity-[0.03]"
+          className="absolute top-4 right-4 sm:right-6 text-[50px] sm:text-[70px] md:text-[100px] font-black leading-none select-none pointer-events-none opacity-[0.03]"
           style={{ color: theme.accentA }}
         >
           {num}
@@ -334,21 +313,21 @@ const LayoutCinematic = ({ hack, theme, num }) => (
 
         <BrandRail colors={theme.dots} />
         <OrgPills organizers={hack.organizers} theme={theme} />
-        <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-1">{hack.title}</h3>
-        <div className="mb-6">
+        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary mb-1">{hack.title}</h3>
+        <div className="mb-4 sm:mb-6">
           <Meta date={hack.date} location={hack.location} colors={theme.dots} />
         </div>
 
-        <p className="text-sm text-text-secondary leading-relaxed mb-8">{hack.description}</p>
+        <p className="text-xs sm:text-sm text-text-secondary leading-relaxed mb-6 sm:mb-8">{hack.description}</p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
           <div>
             <h4
-              className="text-[10px] font-mono uppercase tracking-widest mb-4 flex items-center gap-2"
+              className="text-[10px] font-mono uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2"
               style={{ color: theme.accentA }}
             >
               <span className="w-4 h-px" style={{ background: theme.accentA }} />
-              Contributions
+              {hackT.contributions}
             </h4>
             <ul className="space-y-3">
               {hack.highlights.map((h, i) => (
@@ -358,15 +337,15 @@ const LayoutCinematic = ({ hack, theme, num }) => (
           </div>
           <div>
             <h4
-              className="text-[10px] font-mono uppercase tracking-widest mb-4 flex items-center gap-2"
+              className="text-[10px] font-mono uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2"
               style={{ color: theme.accentB }}
             >
               <span className="w-4 h-px" style={{ background: theme.accentB }} />
-              Technologies
+              {hackT.technologies}
             </h4>
-            <div className="flex flex-wrap gap-2">
-              {hack.stack.map((t, i) => (
-                <Tag key={i} name={t} theme={theme} />
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {hack.stack.map((techItem, i) => (
+                <Tag key={i} name={techItem} theme={theme} />
               ))}
             </div>
           </div>
@@ -376,13 +355,14 @@ const LayoutCinematic = ({ hack, theme, num }) => (
   </article>
 );
 
-/* ══════════════════════════════════════════════════════
-   SECTION
-   ══════════════════════════════════════════════════════ */
 const LAYOUTS = { google: LayoutSplit, ey: LayoutCinematic };
 
 const Hackathons = () => {
   const ref = useRef(null);
+  const { t } = useLanguage();
+
+  const hackT = t("hackathonsSection");
+  const hackathonsList = t("hackathonsList");
 
   useGSAP(() => {
     gsap.from(".hack-card", {
@@ -431,9 +411,9 @@ const Hackathons = () => {
   }, { scope: ref });
 
   return (
-    <SectionWrapper id="hackathons" title="Concours & Hackathons" subtitle="Challenges techniques et moments forts.">
-      <div ref={ref} className="max-w-5xl mx-auto space-y-16">
-        {hackathons.map((hack, idx) => {
+    <SectionWrapper id="hackathons" title={hackT.title} subtitle={hackT.subtitle}>
+      <div ref={ref} className="max-w-5xl mx-auto space-y-10 sm:space-y-16">
+        {hackathonsList.map((hack, idx) => {
           const key = hack.theme || "google";
           const Layout = LAYOUTS[key] || LayoutSplit;
           return (
@@ -442,6 +422,7 @@ const Hackathons = () => {
               hack={hack}
               theme={THEMES[key] || THEMES.google}
               num={String(idx + 1).padStart(2, "0")}
+              hackT={hackT}
             />
           );
         })}

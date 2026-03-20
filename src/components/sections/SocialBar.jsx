@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { socialLinks } from "../../constants/data";
+import { useLanguage } from "../../i18n";
 
 const ICONS = {
   LinkedIn: (
@@ -45,12 +45,10 @@ const SocialIcon = ({ link }) => {
       className="social-icon-card group relative block"
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      style={{
-        perspective: "600px",
-      }}
+      style={{ perspective: "600px" }}
     >
       <div
-        className="relative flex items-center gap-3 px-5 py-3 rounded-2xl border border-white/[0.06] transition-all duration-300 group-hover:border-[var(--sc)] group-hover:shadow-[0_0_30px_var(--sg)]"
+        className="relative flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl border border-white/[0.06] transition-all duration-300 group-hover:border-[var(--sc)] group-hover:shadow-[0_0_30px_var(--sg)]"
         style={{
           "--sc": `${link.color}50`,
           "--sg": `${link.color}20`,
@@ -59,37 +57,28 @@ const SocialIcon = ({ link }) => {
           transition: "transform 0.15s ease-out, border-color 0.3s, box-shadow 0.3s, background 0.3s",
         }}
       >
-        {/* Glow ring behind icon */}
         <div
-          className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          className="absolute -inset-px rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{ background: `radial-gradient(circle at 50% 50%, ${link.color}12, transparent 70%)` }}
         />
 
-        {/* Icon */}
         <div
-          className="relative w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-          style={{
-            background: `${link.color}15`,
-            color: link.color,
-            boxShadow: `0 0 0 0 ${link.color}00`,
-          }}
+          className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+          style={{ background: `${link.color}15`, color: link.color }}
         >
           {ICONS[link.name]}
-          {/* Pulse ring on hover */}
           <div
-            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none"
+            className="absolute inset-0 rounded-lg sm:rounded-xl opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none"
             style={{ border: `1.5px solid ${link.color}40` }}
           />
         </div>
 
-        {/* Label */}
         <span className="relative text-xs font-semibold text-text-muted group-hover:text-text-primary transition-colors duration-300 tracking-wide">
           {link.name}
         </span>
 
-        {/* Arrow indicator */}
         <svg
-          className="relative w-3.5 h-3.5 text-text-muted/40 group-hover:text-[var(--ac)] group-hover:translate-x-0.5 transition-all duration-300 ml-1"
+          className="relative w-3 h-3 sm:w-3.5 sm:h-3.5 text-text-muted/40 group-hover:text-[var(--ac)] group-hover:translate-x-0.5 transition-all duration-300 ml-1"
           fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}
           style={{ "--ac": link.color }}
         >
@@ -102,6 +91,8 @@ const SocialIcon = ({ link }) => {
 
 const SocialBar = () => {
   const ref = useRef(null);
+  const { t } = useLanguage();
+  const socialLinks = t("socialLinks");
 
   useGSAP(() => {
     gsap.from(".social-icon-card", {
@@ -111,9 +102,9 @@ const SocialBar = () => {
   }, { scope: ref });
 
   return (
-    <div ref={ref} className="relative z-20 mt-6 mb-6 px-6 md:px-12 lg:px-20">
+    <div ref={ref} className="relative z-20 mt-4 sm:mt-6 mb-4 sm:mb-6 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-wrap justify-start gap-4">
+        <div className="flex flex-wrap justify-start gap-3 sm:gap-4">
           {socialLinks.map((link) => (
             <SocialIcon key={link.name} link={link} />
           ))}

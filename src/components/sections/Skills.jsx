@@ -2,16 +2,16 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "../../i18n";
 import SectionWrapper from "../ui/SectionWrapper";
-import { skillCategories } from "../../constants/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CLOUD_TITLES = ["Google Cloud (GCP)", "Microsoft Azure"];
 
-const CLOUD_CONFIG = {
-  "Google Cloud (GCP)": { color: "#4285f4", certLabel: "Certifié", certName: "Associate Data Practitioner" },
-  "Microsoft Azure": { color: "#0078d4", certLabel: "Certifié", certName: "Azure Fundamentals AZ-900" },
+const CLOUD_COLORS = {
+  "Google Cloud (GCP)": "#4285f4",
+  "Microsoft Azure": "#0078d4",
 };
 
 const CORE_COLORS = ["#8b5cf6", "#6366f1", "#10b981", "#f59e0b", "#ec4899", "#f97316", "#22d3ee"];
@@ -40,36 +40,36 @@ const SubsectionTitle = ({ children }) => (
   </div>
 );
 
-const CloudCard = ({ cat }) => {
-  const config = CLOUD_CONFIG[cat.title];
+const CloudCard = ({ cat, certLabel, certName }) => {
+  const color = CLOUD_COLORS[cat.title];
   return (
-    <div className="skill-cloud-card h-full flex flex-col" style={{ "--cloud-color": config.color, "--cloud-color-dim": `${config.color}15` }}>
-      <div className="flex items-center justify-between mb-3">
+    <div className="skill-cloud-card h-full flex flex-col" style={{ "--cloud-color": color, "--cloud-color-dim": `${color}15` }}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg flex-center shrink-0" style={{ background: `${config.color}15`, color: config.color }}>{ICONS[cat.icon]}</div>
+          <div className="w-8 h-8 rounded-lg flex-center shrink-0" style={{ background: `${color}15`, color }}>{ICONS[cat.icon]}</div>
           <div>
-            <h4 className="font-semibold text-text-primary text-base leading-tight">{cat.title}</h4>
-            <p className="text-xs font-mono text-text-muted mt-0.5">{config.certName}</p>
+            <h4 className="font-semibold text-text-primary text-sm sm:text-base leading-tight">{cat.title}</h4>
+            <p className="text-xs font-mono text-text-muted mt-0.5">{certName}</p>
           </div>
         </div>
-        <span className="skill-cert-badge shrink-0" style={{ borderColor: `${config.color}40`, color: config.color }}><CheckBadge />{config.certLabel}</span>
+        <span className="skill-cert-badge shrink-0 self-start sm:self-auto" style={{ borderColor: `${color}40`, color }}><CheckBadge />{certLabel}</span>
       </div>
-      <div className="flex flex-wrap gap-2 content-start mt-auto">
-        {cat.skills.map((skill) => (<span key={skill} className="skill-tag" style={{ "--tag-color": config.color }}>{skill}</span>))}
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 content-start mt-auto">
+        {cat.skills.map((skill) => (<span key={skill} className="skill-tag" style={{ "--tag-color": color }}>{skill}</span>))}
       </div>
     </div>
   );
 };
 
 const CoreCard = ({ cat, color }) => (
-  <div className="h-full flex flex-col rounded-xl p-5 bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-[var(--card-color)]" style={{ "--card-color": color }}>
+  <div className="h-full flex flex-col rounded-xl p-4 sm:p-5 bg-white/[0.02] border border-white/[0.05] transition-all duration-300 hover:border-[var(--card-color)]" style={{ "--card-color": color }}>
     <div className="flex items-center gap-2.5 mb-3">
       <span style={{ color }} className="shrink-0">{ICONS[cat.icon]}</span>
       <h4 className="text-xs font-bold tracking-[0.08em] uppercase" style={{ color }}>{cat.title}</h4>
     </div>
-    <div className="flex flex-wrap gap-2 content-start mt-auto">
+    <div className="flex flex-wrap gap-1.5 sm:gap-2 content-start mt-auto">
       {cat.skills.map((skill) => (
-        <span key={skill} className="text-xs font-mono px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.05] text-text-muted transition-colors duration-200 hover:text-[var(--card-color)] hover:border-[var(--card-color)]" style={{ "--card-color": color }}>{skill}</span>
+        <span key={skill} className="text-xs font-mono px-2 sm:px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.05] text-text-muted transition-colors duration-200 hover:text-[var(--card-color)] hover:border-[var(--card-color)]" style={{ "--card-color": color }}>{skill}</span>
       ))}
     </div>
   </div>
@@ -77,8 +77,14 @@ const CoreCard = ({ cat, color }) => (
 
 const Skills = () => {
   const ref = useRef(null);
-  const cloudSkills = skillCategories.filter((c) => CLOUD_TITLES.includes(c.title));
-  const coreSkills = skillCategories.filter((c) => !CLOUD_TITLES.includes(c.title));
+  const { t } = useLanguage();
+
+  const skillsT = t("skills");
+  const categories = t("skillCategories");
+  const cloudConfigT = t("cloudConfig");
+
+  const cloudSkills = categories.filter((c) => CLOUD_TITLES.includes(c.title));
+  const coreSkills = categories.filter((c) => !CLOUD_TITLES.includes(c.title));
 
   useGSAP(() => {
     gsap.from(".skill-cloud-card", {
@@ -94,17 +100,19 @@ const Skills = () => {
   }, { scope: ref });
 
   return (
-    <SectionWrapper id="skills" title="Compétences" subtitle="Stack technique & méthodologie.">
+    <SectionWrapper id="skills" title={skillsT.title} subtitle={skillsT.subtitle}>
       <div ref={ref} className="max-w-5xl mx-auto">
         <div className="mb-14">
-          <SubsectionTitle>Plateformes Cloud</SubsectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {cloudSkills.map((cat) => (<CloudCard key={cat.title} cat={cat} />))}
+          <SubsectionTitle>{skillsT.cloudPlatforms}</SubsectionTitle>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-stretch">
+            {cloudSkills.map((cat) => (
+              <CloudCard key={cat.title} cat={cat} certLabel={skillsT.certified} certName={cloudConfigT[cat.title]?.certName || ""} />
+            ))}
           </div>
         </div>
         <div>
-          <SubsectionTitle>Compétences Techniques</SubsectionTitle>
-          <div className="skill-core-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <SubsectionTitle>{skillsT.technicalSkills}</SubsectionTitle>
+          <div className="skill-core-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {coreSkills.map((cat, i) => (
               <div key={cat.title} data-gsap className="skill-core-item h-full">
                 <CoreCard cat={cat} color={CORE_COLORS[i % CORE_COLORS.length]} />

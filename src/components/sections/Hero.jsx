@@ -3,14 +3,9 @@ import { Canvas } from "@react-three/fiber";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useMousePosition } from "../../hooks";
+import { useLanguage } from "../../i18n";
 import HeroScene from "../three/HeroScene";
 import Button from "../ui/Button";
-
-const ROLES = [
-  "Data Engineer",
-  "AI Builder",
-  "Future Founder",
-];
 
 class CanvasErrorBoundary extends Component {
   state = { hasError: false };
@@ -75,8 +70,10 @@ const FallbackAvatar = () => (
 
 const Hero = () => {
   const container = useRef(null);
+  const { t } = useLanguage();
   const mouse = useMousePosition(0.03);
-  const typed = useTypingEffect(ROLES);
+  const hero = t("hero");
+  const typed = useTypingEffect(hero.roles);
   const [imgFailed, setImgFailed] = useState(false);
 
   useGSAP(() => {
@@ -95,10 +92,9 @@ const Hero = () => {
   return (
     <section
       ref={container}
-      className="relative w-full h-screen flex items-center overflow-hidden"
+      className="relative w-full min-h-screen flex items-center overflow-hidden py-20 md:py-0 md:h-screen"
       style={{ background: "linear-gradient(180deg, #020024 0%, #030014 40%, #0a0118 100%)" }}
     >
-      {/* 3D neural network background */}
       <div className="absolute inset-0 hidden md:block">
         <CanvasErrorBoundary>
           <Canvas
@@ -111,10 +107,8 @@ const Hero = () => {
         </CanvasErrorBoundary>
       </div>
 
-      {/* Mobile gradient fallback */}
       <div className="absolute inset-0 md:hidden bg-gradient-to-b from-[#0a0030] via-background to-background" />
 
-      {/* Mouse-following volumetric glow */}
       <div
         className="absolute inset-0 pointer-events-none hidden md:block"
         style={{
@@ -122,64 +116,50 @@ const Hero = () => {
         }}
       />
 
-      {/* Cinematic vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_15%,var(--color-background)_75%)]" />
-
-      {/* Rim light top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
-      {/* Split Layout */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-
-        {/* Left: Text Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
         <div className="hero-left text-left">
-          <p className="hero-label text-primary-light font-mono text-sm md:text-base mb-5 tracking-[0.25em] uppercase">
-            Data Engineering &amp; Cloud Architecture
+          <p className="hero-label text-primary-light font-mono text-xs sm:text-sm md:text-base mb-4 sm:mb-5 tracking-[0.2em] sm:tracking-[0.25em] uppercase">
+            {hero.label}
           </p>
 
-          <h1 className="hero-name text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 leading-[0.95] tracking-tight">
+          <h1 className="hero-name text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-3 sm:mb-4 leading-[0.95] tracking-tight">
             <span className="hero-name-glow gradient-text">Tristan</span>
             <br />
             <span className="text-text-primary">Mendes</span>
           </h1>
 
-          {/* Typing effect */}
-          <div className="hero-typing-row flex items-center gap-3 mb-6">
-            <div className="w-8 h-px bg-gradient-to-r from-primary/60 to-transparent" />
-            <p className="text-base md:text-lg text-text-secondary font-light min-h-[1.75rem]">
+          <div className="hero-typing-row flex items-center gap-3 mb-4 sm:mb-6">
+            <div className="w-6 sm:w-8 h-px bg-gradient-to-r from-primary/60 to-transparent" />
+            <p className="text-sm sm:text-base md:text-lg text-text-secondary font-light min-h-[1.5rem] sm:min-h-[1.75rem]">
               <span>{typed}</span>
-              <span className="hero-cursor inline-block w-[2px] h-5 bg-primary-light ml-0.5 align-middle" />
+              <span className="hero-cursor inline-block w-[2px] h-4 sm:h-5 bg-primary-light ml-0.5 align-middle" />
             </p>
           </div>
 
-          <p className="hero-desc text-text-muted text-sm mb-8 font-mono max-w-lg leading-relaxed">
-            Passionné par l&apos;innovation technologique, j&apos;utilise l&apos;IA et l&apos;automatisation des pipelines de données pour résoudre des problèmes complexes et livrer des solutions fiables.
+          <p className="hero-desc text-text-muted text-xs sm:text-sm mb-6 sm:mb-8 font-mono max-w-lg leading-relaxed">
+            {hero.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start gap-4">
+          <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
             <Button href="#projects" className="hero-btn">
-              Voir mes projets
+              {hero.cta}
             </Button>
             <Button href="#contact" variant="outline" className="hero-btn">
-              Me contacter
+              {hero.ctaSecondary}
             </Button>
           </div>
-
         </div>
 
-        {/* Right: Profile Photo */}
-        <div className="hero-photo flex justify-center lg:justify-end">
+        <div className="hero-photo flex justify-center lg:justify-end mt-8 lg:mt-0">
           <div className="relative group">
-            {/* Outer glow ring */}
             <div className="absolute -inset-3 rounded-full bg-gradient-to-br from-primary/20 via-accent/10 to-primary-dark/20 blur-xl opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
-
-            {/* Border ring */}
             <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-primary/30 via-transparent to-accent/20 p-px">
               <div className="w-full h-full rounded-full bg-background" />
             </div>
-
-            {/* Photo with fallback */}
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border border-primary/15">
+            <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 xl:w-72 xl:h-72 rounded-full overflow-hidden border border-primary/15">
               <FallbackAvatar />
               {!imgFailed && (
                 <img
@@ -191,18 +171,15 @@ const Hero = () => {
               )}
               <div className="absolute inset-0 z-20 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
             </div>
-
-            {/* Decorative accent dots */}
             <div className="absolute -top-2 -right-2 w-3 h-3 rounded-full bg-primary/40 blur-[2px]" />
             <div className="absolute -bottom-1 -left-3 w-2 h-2 rounded-full bg-accent/30 blur-[1px]" />
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      <div className="hero-scroll absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
         <span className="text-[10px] text-text-muted tracking-[0.25em] uppercase font-mono">
-          Scroll
+          {hero.scroll}
         </span>
         <div className="w-5 h-8 border border-text-muted/25 rounded-full flex justify-center pt-1.5">
           <div className="w-1 h-2 bg-primary-light rounded-full animate-bounce" />
