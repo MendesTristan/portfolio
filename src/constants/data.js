@@ -213,7 +213,7 @@ export const hackathons = [
   {
     theme: "google",
     title: "Hackathon Deloitte x Google Cloud",
-    date: "28 novembre 2024",
+    date: "28 novembre 2025",
     location: "La Défense – Tour Majunga, Paris",
     description: "Challenge tech d'une journée autour du Cloud, de l'IA et de la Data. Résolution de cas métier réels via la création d'agents IA de bout en bout sur Google Cloud avec l'Agent Development Kit (ADK) de Google : un agent de gestion de campagnes Marketing et un agent de prédiction du taux de change de devises internationales basé sur des données temps réel du web.",
     highlights: [
